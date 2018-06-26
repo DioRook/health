@@ -4,6 +4,30 @@
 <title>Page Titlefirst aid health records</title>
 <script src="js/dropzone.js"></script>
 <link rel="stylesheet" href="css/dropzone.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+<?php
+if(isset($_GET['upload'])){
+	$u=$_GET['upload']; ?>
+	<?php if($u=='1'){?>
+		<script>
+			alert("file uploaded");
+		</script>
+	<?php } ?>
+	<?php if($u=='0'){?>
+		<script>
+			alert("Invalid User Name");
+		</script>
+	<?php } ?>
+	<?php if($u=='2'){?>
+		<script>
+			alert("Select File");
+		</script>
+	<?php } ?>
+
+
+
+<?php }?>
+
+
 <style> 
 input[type=text] {
     width: 100%;

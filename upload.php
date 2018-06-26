@@ -1,5 +1,5 @@
 <?php
-
+include ("apis/connection.php");
 $ds = DIRECTORY_SEPARATOR;  //1
 $id = $_POST['uidai'];
 $type=$_POST['des'];
@@ -7,6 +7,15 @@ print_r($_FILES);
 echo "<br>";
 print_r($_POST);
 echo "<br>";
+$q="SELECT * FROM patients WHERE uidai = '$_POST[uidai]' ";
+$r=mysqli_query($connect,$q);
+$a=mysqli_fetch_assoc($r);
+echo "<br>a :";
+print_r($a);
+print_r($q);
+echo "<br> r:";
+print_r($r);
+if($a){
 $storeFolder = 'doc'.$ds.$id.$ds.$type;   //2
 print_r($storeFolder);
 echo "<br>";
@@ -21,7 +30,7 @@ $name = $newname  . '.'.$ext;
 print_r($name);
 echo "<br>";
  
-if (!empty($_FILES)) {
+if ($_FILES['file']['name']!='') {
      
     $tempFile = $_FILES['file']['tmp_name'];          //3             
       
@@ -47,7 +56,14 @@ if (!empty($_FILES)) {
 	}
  	print_r($targetFile);
 	echo "<br>";
-    move_uploaded_file($tempFile,$targetFile); //6    
+    move_uploaded_file($tempFile,$targetFile); //6 
+    header("Location: uploadrec.php?upload=1");   
 
+}else{
+	header("Location: uploadrec.php?upload=2");   
+}
+}else{
+	header("Location: uploadrec.php?upload=0");   
+	
 }
 ?> 

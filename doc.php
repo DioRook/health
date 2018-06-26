@@ -1,4 +1,10 @@
 <!DOCTYPE HTML>
+
+<?php 
+error_reporting(0);
+?>
+
+<?php include ("apis/connection.php");?>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,9 +32,9 @@
  </header>
    </div>
    	<div class="row">
-   		<form class="form-inline" method="post" action="#">
+   		<form class="form-inline" method="post" action="doc.php">
 			<input type="text" class="form-control mb-2 mr-sm-2" id="uidai" name="uidai" value="<?php echo $_POST['uidai'];?>" placeholder="Uidai">
-			  <select name="des" id="des" class="uk-select" style="width:490px">
+			  <select name="des" id="des" class="form-control mb-2 mr-sm-2" style="width:490px" value="<?php echo $_POST['des'];?>">
 				<option value="Heart">Heart</option>
 				<option value="Abdomen">Abdomen</option>
 				<option value="Bladder">Bladder</option>
@@ -58,7 +64,7 @@
 
   			</select>
 
-			
+			<input type="hidden" value="1" name="sub" />
 			
 			<button type="submit" class="btn btn-primary mb-2">Submit</button>
    		</form>
@@ -67,8 +73,11 @@
 			<div class="col-md-3">
 				<ul class="list-group">
 				<?php
+				$q="SELECT * FROM patients WHERE uidai='$_POST[uidai]' ";
+				$r=mysqli_query($connect,$q);
+				if($r AND isset($_POST['sub'])){
 				$dir = "doc/".$_POST['uidai'].'/'.$_POST['des'];
-			
+
 				// Open a directory, and read its contents
 				if (is_dir($dir)){
 				
@@ -98,9 +107,9 @@
 						<embed src="<?php echo $dir.$_GET['file'];?>" width=100% height=100%/>
 								
 					</div>
-				<?php }?>
+				<?php } ?>
 			</div>
-		
+		<?php } ?>
 		</div>
    
 </body>
